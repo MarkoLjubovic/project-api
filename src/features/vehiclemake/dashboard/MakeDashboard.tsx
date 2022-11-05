@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect} from 'react'
 import MakeList from './MakeList'
 import { Grid } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store'
@@ -8,8 +8,18 @@ import LoadingComponent from '../../../app/layout/LoadingComponent'
 export default observer(function MakeDashboard() {
   const { makeStore } = useStore()
 
+//   useEffect(() => {
+//     const fetchPosts=async()=>{
+//       makeStore.loadMakes()
+//     }
+//     fetchPosts();
+// }, [makeStore])
+
   useEffect(() => {
-    makeStore.loadMakes()
+    const fetchPosts=async()=>{
+      makeStore.loadPagingMakes()
+    }
+    fetchPosts();
   }, [makeStore])
 
   if (makeStore.loadingInitial)

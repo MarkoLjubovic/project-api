@@ -1,4 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
+import { PageInfo } from '../models/pageinfo';
+import { PageVehicleMake } from '../models/pagevehiclemake';
 import { VehicleMake } from '../models/vehiclemake';
 
 const sleep=(delay:number)=>{
@@ -32,7 +34,8 @@ const VehicleMakes = {
     details:(id:string)=>requests.get<VehicleMake>(`/VehicleMakes/${id}`),
     create:(vehicleMake:VehicleMake)=>axios.post<void>('/VehicleMakes',vehicleMake),
     update:(vehicleMake:VehicleMake)=>axios.put<void>(`/VehicleMakes/${vehicleMake.id}`, vehicleMake),
-    delete:(id:string)=>axios.delete<void>(`/VehicleMakes/${id}`)
+    delete:(id:string)=>axios.delete<void>(`/VehicleMakes/${id}`),
+    paging:(pageInfo:PageInfo)=>requests.post<PageVehicleMake[]>('/VehicleMakes/Paging',pageInfo)
 }
 
 const agent = {

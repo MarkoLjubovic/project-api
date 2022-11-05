@@ -9,7 +9,8 @@ import MakeListItem from './MakeListItem'
 export default observer(function MakeList() {
   const{makeStore}=useStore();
   const{vehicleMakes}=makeStore;
-
+  const{pageVehicleMakes}=makeStore;
+{console.log(pageVehicleMakes)}
   return (
     <Segment fluid>
       <Button as={Link} to='/createmake' positive content="Create VehicleMake" />
@@ -22,9 +23,15 @@ export default observer(function MakeList() {
             <Table.HeaderCell>View Content</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-        {vehicleMakes.map((make) => (
-          <MakeListItem key={make.id} make={make}/>
-        ))}
+        <>
+        {Object.values(pageVehicleMakes).forEach((make) => (
+          // <MakeListItem key={make.id} make={make}/>
+          // console.log(make);
+          make.items.forEach(item=>{
+            <MakeListItem key={item.id} make={item}/>
+          })
+        ))};
+        </>
          <Table.Footer>
       <Table.Row>
         <Table.HeaderCell colSpan='6'>
