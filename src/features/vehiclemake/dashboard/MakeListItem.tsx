@@ -6,11 +6,12 @@ import { useStore } from '../../../app/stores/store'
 
 interface Props{
     make:VehicleMake
-
+    key:string
 }
 
 export default function MakeListItem({make}:Props){
 
+  console.log(make);
   const{makeStore}=useStore();
   const{deleteMake, loading}=makeStore;
   const[target,setTarget]=useState('');

@@ -4,13 +4,20 @@ import { useStore } from '../../../app/stores/store'
 import { observer } from 'mobx-react-lite'
 import { Link} from 'react-router-dom'
 import MakeListItem from './MakeListItem'
+import { toJS} from 'mobx'
+import { VehicleMake } from '../../../app/models/vehiclemake'
 
 
 export default observer(function MakeList() {
   const{makeStore}=useStore();
-  const{vehicleMakes}=makeStore;
+  const{vehiclePageMakes}=makeStore;
+  const{pagingMake, setLoadingInitial}=makeStore;
   const{pageVehicleMakes}=makeStore;
-{console.log(pageVehicleMakes)}
+  const{pageMakes}=makeStore;
+  {console.log(toJS(vehiclePageMakes))}
+  if(pagingMake==undefined){
+    return <div>Loading</div>
+  }
   return (
     <Segment fluid>
       <Button as={Link} to='/createmake' positive content="Create VehicleMake" />
@@ -23,14 +30,21 @@ export default observer(function MakeList() {
             <Table.HeaderCell>View Content</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-        <>
-        {Object.values(pageVehicleMakes).forEach((make) => (
-          // <MakeListItem key={make.id} make={make}/>
-          // console.log(make);
-          make.items.forEach(item=>{
-            <MakeListItem key={item.id} make={item}/>
-          })
-        ))};
+        <>      
+        {toJS(vehiclePageMakes.forEach(pageMake =>{
+          console.log(toJS(pageMake));
+          return (
+            <MakeListItem make={pageMake} key={pageMake.id}/>
+          //   <Table.Body key={pageMake.id}>
+          //   <Table.Row>
+          //       <Table.Cell>{pageMake.id}</Table.Cell>
+          //       <Table.Cell>{pageMake.makeName}</Table.Cell>
+          //       <Table.Cell>{pageMake.makeAbrv}</Table.Cell>
+          // </Table.Row>
+          // </Table.Body>
+          // 
+          )
+        }))}
         </>
          <Table.Footer>
       <Table.Row>

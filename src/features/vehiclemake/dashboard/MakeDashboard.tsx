@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+import React, { useEffect } from 'react'
 import MakeList from './MakeList'
 import { Grid } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store'
@@ -8,19 +8,21 @@ import LoadingComponent from '../../../app/layout/LoadingComponent'
 export default observer(function MakeDashboard() {
   const { makeStore } = useStore()
 
-//   useEffect(() => {
-//     const fetchPosts=async()=>{
-//       makeStore.loadMakes()
-//     }
-//     fetchPosts();
-// }, [makeStore])
+  //   useEffect(() => {
+  //     const fetchPosts=async()=>{
+  //       makeStore.loadMakes()
+  //     }
+  //     fetchPosts();
+  // }, [makeStore])
 
   useEffect(() => {
     const fetchPosts=async()=>{
-      makeStore.loadPagingMakes()
+      const response=await makeStore.loadPagingMakes()
+      console.log(response)
+      //await makeStore.loadPagingMakes()
     }
-    fetchPosts();
-  }, [makeStore])
+    fetchPosts()
+  }, [])
 
   if (makeStore.loadingInitial)
     return <LoadingComponent content="Loading app" />
