@@ -1,4 +1,3 @@
-import { CONNREFUSED } from "dns";
 import { makeAutoObservable, runInAction, toJS } from "mobx";
 import makeAgent from "../api/makeAgent";
 import { PageInfo } from "../models/pageinfo";
@@ -10,9 +9,6 @@ export default class makeStore {
     vehicleMakes: VehicleMake[] = [];
     vehiclePageMakes: VehicleMake[] = [];
     pageVehicleMakes: PageVehicleMake[] = [{ items: this.vehicleMakes, filter: "", sortOrder: "", pgIndex: 0, numOfPages: 3 }];
-    pageMakes:PageVehicleMake[]=[];
-    pagingMake: { items: VehicleMake, filter: "", sortOrder: "", pgIndex: 0, numOfPages: 3 }[]
-    =[{ items: this.vehicleMake, filter: "", sortOrder: "", pgIndex: 0, numOfPages: 3 }];
     pageInfo: PageInfo = { pgIndex: 0, filter: "", sortOrder: "" };
     selectedMake: VehicleMake | undefined = undefined;
     editMode = false;
@@ -66,16 +62,9 @@ export default class makeStore {
             Object.values(vehicleMakes).forEach(vehicleMake => {
                 console.log(vehicleMake);
                 Object.values(vehicleMake).forEach(make=>{
-                    // this.setMakeP(make);
                     this.vehiclePageMakes.push(make);
-                    // console.log(make);
-                    // console.log("ovo je",toJS(this.vehicleMake));
                 });
-                // this.pagingMake.push(vehicleMake);
                 console.log("ovo je",toJS(this.vehiclePageMakes));
-                //this.setPageMake(vehicleMake);
-                //this.vehicleMake.id=vehicleMake;
-                //this.pagingMake.items=vehicleMake;
             })
             this.setLoadingInitial(false);
         } catch (error) {
@@ -84,22 +73,12 @@ export default class makeStore {
         }
     }
 
-    // async function setMakeP(vm:VehicleMake) {
-    //     await this.vehicleMake=vm;
-    // }
-
     setMakeP=(vm:VehicleMake)=>{
         this.vehicleMake=vm;
     }
 
     private setMake = (vehicleMake: VehicleMake) => {
         this.vehicleMakes.push(vehicleMake);
-    }
-
-    private setPageMake = (pageVehicleMake: PageVehicleMake) => {
-        toJS(this.pageVehicleMakes.push(pageVehicleMake));
-        console.log(this.pageVehicleMakes);
-        console.log([...this.pageVehicleMakes]);
     }
 
     private getMake = (id: string) => {

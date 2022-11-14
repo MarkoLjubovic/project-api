@@ -5,19 +5,24 @@ import { observer } from 'mobx-react-lite'
 import { Link} from 'react-router-dom'
 import MakeListItem from './MakeListItem'
 import { toJS} from 'mobx'
-import { VehicleMake } from '../../../app/models/vehiclemake'
 
 
 export default observer(function MakeList() {
   const{makeStore}=useStore();
-  const{vehiclePageMakes}=makeStore;
-  const{pagingMake, setLoadingInitial}=makeStore;
-  const{pageVehicleMakes}=makeStore;
-  const{pageMakes}=makeStore;
-  {console.log(toJS(vehiclePageMakes))}
-  if(pagingMake==undefined){
-    return <div>Loading</div>
+  const{vehiclePageMakes, pageInfo}=makeStore;
+  
+  const handlePrePage=()=>{
+    if(pageInfo.pgIndex){
+
+    }
   }
+
+  const handleNextPage=()=>{
+    if(pageInfo.pgIndex){
+      
+    }
+  }
+
   return (
     <Segment fluid>
       <Button as={Link} to='/createmake' positive content="Create VehicleMake" />
@@ -31,18 +36,10 @@ export default observer(function MakeList() {
           </Table.Row>
         </Table.Header>
         <>      
-        {toJS(vehiclePageMakes.forEach(pageMake =>{
+        {toJS(vehiclePageMakes.map(pageMake =>{
           console.log(toJS(pageMake));
           return (
-            <MakeListItem make={pageMake} key={pageMake.id}/>
-          //   <Table.Body key={pageMake.id}>
-          //   <Table.Row>
-          //       <Table.Cell>{pageMake.id}</Table.Cell>
-          //       <Table.Cell>{pageMake.makeName}</Table.Cell>
-          //       <Table.Cell>{pageMake.makeAbrv}</Table.Cell>
-          // </Table.Row>
-          // </Table.Body>
-          // 
+         <MakeListItem make={pageMake} key={pageMake.id}/>
           )
         }))}
         </>
@@ -50,14 +47,10 @@ export default observer(function MakeList() {
       <Table.Row>
         <Table.HeaderCell colSpan='6'>
           <Menu floated='right' pagination>
-            <Menu.Item as='a' icon>
+            <Menu.Item as={handlePrePage()} icon>
               <Icon name='chevron left' />
             </Menu.Item>
-            <Menu.Item as='a'>1</Menu.Item>
-            <Menu.Item as='a'>2</Menu.Item>
-            <Menu.Item as='a'>3</Menu.Item>
-            <Menu.Item as='a'>4</Menu.Item>
-            <Menu.Item as='a' icon>
+            <Menu.Item as={handleNextPage()} icon>
               <Icon name='chevron right' />
             </Menu.Item>
           </Menu>
