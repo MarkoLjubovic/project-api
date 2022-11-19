@@ -9,19 +9,8 @@ import { toJS} from 'mobx'
 
 export default observer(function MakeList() {
   const{makeStore}=useStore();
-  const{vehiclePageMakes, pageInfo}=makeStore;
+  const{vehiclePageMakes, handlePrePage, handleNextPage}=makeStore;
   
-  const handlePrePage=()=>{
-    if(pageInfo.pgIndex){
-
-    }
-  }
-
-  const handleNextPage=()=>{
-    if(pageInfo.pgIndex){
-      
-    }
-  }
 
   return (
     <Segment fluid>
@@ -47,10 +36,10 @@ export default observer(function MakeList() {
       <Table.Row>
         <Table.HeaderCell colSpan='6'>
           <Menu floated='right' pagination>
-            <Menu.Item as={handlePrePage()} icon>
+            <Menu.Item onClick={()=>{handlePrePage()}} icon>
               <Icon name='chevron left' />
             </Menu.Item>
-            <Menu.Item as={handleNextPage()} icon>
+            <Menu.Item onClick={()=>{handleNextPage()}} icon>
               <Icon name='chevron right' />
             </Menu.Item>
           </Menu>

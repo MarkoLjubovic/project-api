@@ -9,7 +9,7 @@ export default class makeStore {
     vehicleMakes: VehicleMake[] = [];
     vehiclePageMakes: VehicleMake[] = [];
     pageVehicleMakes: PageVehicleMake[] = [{ items: this.vehicleMakes, filter: "", sortOrder: "", pgIndex: 0, numOfPages: 3 }];
-    pageInfo: PageInfo = { pgIndex: 0, filter: "", sortOrder: "" };
+    pageInfo: PageInfo = { pgIndex: 0, filter: "", sortOrder: "",numOfPages:2, pgSize:3};
     selectedMake: VehicleMake | undefined = undefined;
     editMode = false;
     loading = false;
@@ -18,6 +18,16 @@ export default class makeStore {
     constructor() {
         makeAutoObservable(this)
     }
+
+    handlePrePage=()=>{
+        this.pageInfo.pgIndex--;
+        this.loadPagingMakes();
+      }
+    
+      handleNextPage=()=>{
+        this.pageInfo.pgIndex++;
+        this.loadPagingMakes();
+      }
 
     loadMakes = async () => {
         this.setLoadingInitial(true);
@@ -57,14 +67,16 @@ export default class makeStore {
 
     loadPagingMakes = async () => {
         this.setLoadingInitial(true);
+        console.log(this.pageInfo);
         try {
             const vehicleMakes = await makeAgent.VehicleMakes.paging(this.pageInfo);
             Object.values(vehicleMakes).forEach(vehicleMake => {
                 console.log(vehicleMake);
                 Object.values(vehicleMake).forEach(make=>{
+                    console.log(make);
                     this.vehiclePageMakes.push(make);
                 });
-                console.log("ovo je",toJS(this.vehiclePageMakes));
+                //console.log("ovo je",toJS(this.vehiclePageMakes));
             })
             this.setLoadingInitial(false);
         } catch (error) {
